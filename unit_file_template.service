@@ -1,0 +1,16 @@
+[Unit]
+Description={{SERVICE_DESCRIPTION}}
+After=syslog.target
+
+[Service]
+User={{SERVICE_NAME}}
+Group={{SERVICE_NAME}}
+SuccessExitStatus=143
+EnvironmentFile=/etc/{{SERVICE_NAME}}/{{SERVICE_NAME}}
+ExecStart=/opt/{{SERVICE_NAME}}/{{JAR_FILE_NAME}}
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier={{SERVICE_NAME}}
+
+[Install]
+WantedBy=multi-user.target
