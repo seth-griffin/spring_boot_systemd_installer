@@ -31,7 +31,7 @@ if [[ -z "$1" && -z "$2" && -z "$3" && -z "$4" && -z "$5" ]]
     	echo -e "Not enough arguments supplied\nUsage:\n\t${0} service-name service-description jar-file-name environment-file-name syslog|nosyslog\n"
         exit 1
 fi
-
+    
 ##
 # Set up our environment variables
 ##
@@ -93,27 +93,27 @@ cp ${environment_file_name} /etc/${service_name}/${service_name}
 ##
 if [ $use_syslog = "syslog" ]
     then		    
-	echo "Syslog usage was elected...setting up syslog space in /var/log/${service_name}"
+        echo "Syslog usage was elected...setting up syslog space in /var/log/${service_name}"
 	
-	mkdir -p /var/log/${service_name}
-	chown syslog:${service_name} /var/log/${service_name}
-	chmod 755 /var/log/${service_name}
-	touch /var/log/${service_name}/${service_name}.log
-	chown syslog:${service_name} /var/log/${service_name}/${service_name}.log
-	chmod 755 /var/log/${service_name}/${service_name}.log    
+	    mkdir -p /var/log/${service_name}
+    	chown syslog:${service_name} /var/log/${service_name}
+    	chmod 755 /var/log/${service_name}
+    	touch /var/log/${service_name}/${service_name}.log
+    	chown syslog:${service_name} /var/log/${service_name}/${service_name}.log
+	    chmod 755 /var/log/${service_name}/${service_name}.log    
 
-	echo "Configuring syslog"
-    sed -i "s|#module(load=\"imtcp\")|module(load=\"imtcp\")|g" /etc/rsyslog.conf
-    sed -i "s|input(type=\"imtcp\" port=\"514\")|input(type=\"imtcp\ port\"514\")|g" /etc/rsyslog.conf
-    echo -e "if \$programname == '${service_name}' or \$syslogtag == '${service_name}' then /var/log/${service_name}/${service_name}.log & stop" > /etc/rsyslog.d/30-${service_name}.conf
+    	echo "Configuring syslog"
+        sed -i "s|#module(load=\"imtcp\")|module(load=\"imtcp\")|g" /etc/rsyslog.conf
+        sed -i "s|input(type=\"imtcp\" port=\"514\")|input(type=\"imtcp\ port\"514\")|g" /etc/rsyslog.conf
+        echo -e "if \$programname == '${service_name}' or \$syslogtag == '${service_name}' then /var/log/${service_name}/${service_name}.log & stop" > /etc/rsyslog.d/30-${service_name}.conf
 
-    echo "Reconfiguring systemd unit to use syslog"
-    sed -i "s|#StandardOutput=syslog|StandardOutput=syslog|g" /lib/systemd/system/${service_name}.service
-    sed -i "s|#StandardError=syslog|StandardError=syslog|g" /lib/systemd/system/${service_name}.service
-    sed -i "s|#SyslogIdentifier=${service_name}|SyslogIdentifier=${service_name}|g" /lib/systemd/system/${service_name}.service
+        echo "Reconfiguring systemd unit to use syslog"
+        sed -i "s|#StandardOutput=syslog|StandardOutput=syslog|g" /lib/systemd/system/${service_name}.service
+        sed -i "s|#StandardError=syslog|StandardError=syslog|g" /lib/systemd/system/${service_name}.service
+        sed -i "s|#SyslogIdentifier=${service_name}|SyslogIdentifier=${service_name}|g" /lib/systemd/system/${service_name}.service
 
-	echo "Reloading rsyslog"
-    systemctl restart rsyslog
+	    echo "Reloading rsyslog"
+        systemctl restart rsyslog
 fi
 
 ##
