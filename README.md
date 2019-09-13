@@ -1,6 +1,6 @@
 ## Overview
 
-This script will install your springboot executable jar as a systemd service
+This script will install your Spring Boot executable jar as a systemd service
 
 It has been tested on Ubuntu 18.04
 
