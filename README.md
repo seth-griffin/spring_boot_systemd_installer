@@ -6,10 +6,10 @@ It has been tested on Ubuntu 18.04
 
 Once your install succeeds you can use the following to control your app like a service
 
-* systemctl enable service-name.service - Enables the service for use
-* systemctl start service-name.service - Starts the service
-* systemctl status service-name.service - Check the status of the service
-* journalctl -f -u - Show the logs for the service
+* `systemctl enable service-name.service` - Enables the service for use
+* `systemctl start service-name.service` - Starts the service
+* `systemctl status service-name.service` - Check the status of the service
+* `journalctl -f -u - service-name.service` Show the logs for the service
 
 Note that for this script to work correctly all of the files must be in the current working directory.
 
