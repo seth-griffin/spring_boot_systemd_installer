@@ -31,7 +31,12 @@ Example:
 
 ```
 
-./springboot-systemd-installer.sh my-service-name "My Service Desription" my-app-name.jar my_env_file syslog
+./springboot-systemd-installer.sh \
+    my-service-name \
+    "My Service Desription" \
+    my-app-name.jar \
+    my_env_file \
+    syslog
 
 ```
 
